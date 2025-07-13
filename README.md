@@ -3,7 +3,7 @@
 Welcome to my personal portfolio website! This is a modern, responsive website showcasing my journey as a Computer Science Engineering student and aspiring full-stack developer.
 
 ## 🌐 Live Website
-Visit my portfolio: [https://adarshmane146.github.io](https://adarshmane146.github.io)
+Visit my portfolio: https://adarshmane146.github.io/Adarshmane/
 
 ## 📋 About
 I'm a third-year B.Tech Computer Science Engineering student at Ideal Institute of Technology with a solid foundation in programming and web development. This portfolio showcases my skills, education, projects, and professional journey.
