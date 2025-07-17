@@ -635,27 +635,25 @@
             <div class="container">
                 <h2>Certifications & Experience</h2>
                 <div class="skills-grid">
-                    <div class="skill-card certificate-card" onclick="showCertificate('certificates/python.pdf')">
+                    <div class="skill-card certificate-card" onclick="showCertificate('python')">
                         <div class="click-hint">Click to view</div>
                         <div class="skill-icon">🎯</div>
                         <h3>Python Fundamentals</h3>
                         <p>Infosys Springboard - May 2023</p>
                     </div>
-                   
-    
-                    <div class="skill-card certificate-card" onclick="showCertificate('certificates/Java Programming Fundamentals edx.pdf')">
+                    <div class="skill-card certificate-card" onclick="showCertificate('java')">
                         <div class="click-hint">Click to view</div>
                         <div class="skill-icon">☕</div>
                         <h3>Java Fundamentals</h3>
                         <p>edX Certification - June 2024</p>
                     </div>
-                    <div class="skill-card certificate-card" onclick="showCertificate('certificates/MANE ADARSH android.pdf')">
+                    <div class="skill-card certificate-card" onclick="showCertificate('android')">
                         <div class="click-hint">Click to view</div>
                         <div class="skill-icon">📱</div>
                         <h3>Android Development</h3>
                         <p>Google Virtual Internship - 10 weeks</p>
                     </div>
-                    <div class="skill-card certificate-card" onclick="showCertificate('certificates/Employability Skills.pdf')">
+                    <div class="skill-card certificate-card" onclick="showCertificate('employability')">
                         <div class="click-hint">Click to view</div>
                         <div class="skill-icon">💼</div>
                         <h3>Employability Skills</h3>
@@ -699,28 +697,32 @@
                 provider: "Infosys Springboard",
                 date: "May 2023",
                 description: "Comprehensive Python programming course covering fundamentals, data structures, and basic programming concepts.",
-                skills: ["Python Syntax", "Data Types", "Control Structures", "Functions", "Object-Oriented Programming"]
+                skills: ["Python Syntax", "Data Types", "Control Structures", "Functions", "Object-Oriented Programming"],
+                file: "certificates/python.pdf"
             },
             java: {
                 title: "Java Fundamentals Certificate",
                 provider: "edX Platform",
                 date: "June 2024",
                 description: "Complete Java programming certification covering core concepts, OOP principles, and application development.",
-                skills: ["Java Syntax", "Object-Oriented Programming", "Exception Handling", "Collections Framework", "File I/O"]
+                skills: ["Java Syntax", "Object-Oriented Programming", "Exception Handling", "Collections Framework", "File I/O"],
+                file: "certificates/Java Programming Fundamentals edx.pdf"
             },
             android: {
                 title: "Android Development Certificate",
                 provider: "Google Virtual Internship",
                 date: "10 weeks program",
                 description: "Intensive Android development program covering mobile app development, UI/UX design, and Google Play deployment.",
-                skills: ["Android Studio", "Java/Kotlin", "XML Layouts", "Activity Lifecycle", "Material Design"]
+                skills: ["Android Studio", "Java/Kotlin", "XML Layouts", "Activity Lifecycle", "Material Design"],
+                file: "certificates/MANE ADARSH android.pdf"
             },
             employability: {
                 title: "Employability Skills Certificate",
                 provider: "IBM Skills Build",
                 date: "6 weeks program",
                 description: "Professional development program focusing on workplace skills, communication, and career readiness.",
-                skills: ["Communication Skills", "Problem Solving", "Team Collaboration", "Time Management", "Professional Ethics"]
+                skills: ["Communication Skills", "Problem Solving", "Team Collaboration", "Time Management", "Professional Ethics"],
+                file: "certificates/Employability Skills.pdf"
             }
         };
 
@@ -728,7 +730,6 @@
             const modal = document.getElementById('certificateModal');
             const content = document.getElementById('certificateContent');
             const cert = certificates[certType];
-            
             content.innerHTML = `
                 <h2>${cert.title}</h2>
                 <div class="certificate-placeholder">
@@ -742,9 +743,40 @@
                         <p><strong>Skills Covered:</strong></p>
                         <p>${cert.skills.join(' • ')}</p>
                     </div>
+                    <div style="margin-top:20px;">
+                        <iframe src="${cert.file}" width="100%" height="350px" style="border-radius:10px;border:none;background:#fff;"></iframe>
+                    </div>
                 </div>
             `;
-            
+            modal.style.display = 'block';
+        }
+
+        function showAllCertificates() {
+            const modal = document.getElementById('certificateModal');
+            const content = document.getElementById('certificateContent');
+            let html = `<h2>All Certificates</h2>`;
+            html += `<div>`;
+            Object.values(certificates).forEach(cert => {
+                html += `
+                    <div class="certificate-placeholder" style="margin-bottom:30px;">
+                        <h3>🏆 ${cert.title}</h3>
+                        <p><strong>Issued by:</strong> ${cert.provider}</p>
+                        <p><strong>Date:</strong> ${cert.date}</p>
+                        <div class="cert-details">
+                            <p><strong>Description:</strong></p>
+                            <p>${cert.description}</p>
+                            <br>
+                            <p><strong>Skills Covered:</strong></p>
+                            <p>${cert.skills.join(' • ')}</p>
+                        </div>
+                        <div style="margin-top:20px;">
+                            <iframe src="${cert.file}" width="100%" height="350px" style="border-radius:10px;border:none;background:#fff;"></iframe>
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            content.innerHTML = html;
             modal.style.display = 'block';
         }
 
