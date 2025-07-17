@@ -202,6 +202,7 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             border: 2px solid transparent;
+            position: relative;
         }
 
         .skill-card:hover {
@@ -220,6 +221,135 @@
             justify-content: center;
             font-size: 1.5rem;
             color: white;
+        }
+
+        /* Certificate specific styling */
+        .certificate-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .certificate-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .certificate-card .click-hint {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .certificate-card:hover .click-hint {
+            opacity: 1;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .certificate-display {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .certificate-display h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .certificate-display h2::after {
+            display: none;
+        }
+
+        .certificate-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 15px;
+            margin: 20px 0;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .certificate-placeholder h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .certificate-placeholder p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .certificate-placeholder .cert-details {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
         }
 
         /* Education Section */
@@ -505,22 +635,26 @@
             <div class="container">
                 <h2>Certifications & Experience</h2>
                 <div class="skills-grid">
-                    <div class="skill-card">
-                        <div class="skill-icon">🏆</div>
+                    <div class="skill-card certificate-card" onclick="showCertificate('python')">
+                        <div class="click-hint">Click to view</div>
+                        <div class="skill-icon">🎯</div>
                         <h3>Python Fundamentals</h3>
                         <p>Infosys Springboard - May 2023</p>
                     </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">🎯</div>
+                    <div class="skill-card certificate-card" onclick="showCertificate('java')">
+                        <div class="click-hint">Click to view</div>
+                        <div class="skill-icon">☕</div>
                         <h3>Java Fundamentals</h3>
                         <p>edX Certification - June 2024</p>
                     </div>
-                    <div class="skill-card">
+                    <div class="skill-card certificate-card" onclick="showCertificate('android')">
+                        <div class="click-hint">Click to view</div>
                         <div class="skill-icon">📱</div>
                         <h3>Android Development</h3>
                         <p>Google Virtual Internship - 10 weeks</p>
                     </div>
-                    <div class="skill-card">
+                    <div class="skill-card certificate-card" onclick="showCertificate('employability')">
+                        <div class="click-hint">Click to view</div>
                         <div class="skill-icon">💼</div>
                         <h3>Employability Skills</h3>
                         <p>IBM Skills Build - 6 weeks</p>
@@ -544,7 +678,95 @@
         </div>
     </footer>
 
+    <!-- Modal for Certificate Display -->
+    <div id="certificateModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="certificateContent" class="certificate-display">
+                <!-- Certificate content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Certificate data
+        const certificates = {
+            python: {
+                title: "Python Fundamentals Certificate",
+                provider: "Infosys Springboard",
+                date: "May 2023",
+                description: "Comprehensive Python programming course covering fundamentals, data structures, and basic programming concepts.",
+                skills: ["Python Syntax", "Data Types", "Control Structures", "Functions", "Object-Oriented Programming"]
+            },
+            java: {
+                title: "Java Fundamentals Certificate",
+                provider: "edX Platform",
+                date: "June 2024",
+                description: "Complete Java programming certification covering core concepts, OOP principles, and application development.",
+                skills: ["Java Syntax", "Object-Oriented Programming", "Exception Handling", "Collections Framework", "File I/O"]
+            },
+            android: {
+                title: "Android Development Certificate",
+                provider: "Google Virtual Internship",
+                date: "10 weeks program",
+                description: "Intensive Android development program covering mobile app development, UI/UX design, and Google Play deployment.",
+                skills: ["Android Studio", "Java/Kotlin", "XML Layouts", "Activity Lifecycle", "Material Design"]
+            },
+            employability: {
+                title: "Employability Skills Certificate",
+                provider: "IBM Skills Build",
+                date: "6 weeks program",
+                description: "Professional development program focusing on workplace skills, communication, and career readiness.",
+                skills: ["Communication Skills", "Problem Solving", "Team Collaboration", "Time Management", "Professional Ethics"]
+            }
+        };
+
+        function showCertificate(certType) {
+            const modal = document.getElementById('certificateModal');
+            const content = document.getElementById('certificateContent');
+            const cert = certificates[certType];
+            
+            content.innerHTML = `
+                <h2>${cert.title}</h2>
+                <div class="certificate-placeholder">
+                    <h3>🏆 ${cert.title}</h3>
+                    <p><strong>Issued by:</strong> ${cert.provider}</p>
+                    <p><strong>Date:</strong> ${cert.date}</p>
+                    <div class="cert-details">
+                        <p><strong>Description:</strong></p>
+                        <p>${cert.description}</p>
+                        <br>
+                        <p><strong>Skills Covered:</strong></p>
+                        <p>${cert.skills.join(' • ')}</p>
+                    </div>
+                </div>
+                <p style="color: #666; font-style: italic; margin-top: 20px;">
+                    * This is a placeholder certificate display. You can replace this with actual certificate images or PDF viewers.
+                </p>
+            `;
+            
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('certificateModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('certificateModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
