@@ -663,11 +663,7 @@
                     </div>
                 </div>
             </div>
-            <script>
-    function showCertificate(pdfPath) {
-      window.open(pdfPath, '_blank');
-    }
-  </script>
+            
         </section>
     </main>
 
@@ -747,8 +743,15 @@
                         <p>${cert.skills.join(' • ')}</p>
                     </div>
                 </div>
+                <div class="skill-card certificate-card" onclick="showCertificate('certificates/python.pdf')">
+                        <div class="click-hint">Click to view</div>
+                        <div class="skill-icon">🎯</div>
+                        <h3>Python Fundamentals</h3>
+                        <p>Infosys Springboard - May 2023</p>
+                    </div>
+                   
+    
                 <p style="color: #666; font-style: italic; margin-top: 20px;">
-                    * This is a placeholder certificate display. You can replace this with actual certificate images or PDF viewers.
                 </p>
             `;
             
